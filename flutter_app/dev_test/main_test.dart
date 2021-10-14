@@ -4,6 +4,8 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
+import 'package:emergency_app_flutter/theme/style.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -16,39 +18,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Emergency App',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-
-        //brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color.fromRGBO(90, 89, 88, 100),
-        fontFamily: 'RedHatText',
-        textTheme: const TextTheme(bodyText2: TextStyle(fontSize: 32)),
-        inputDecorationTheme: const InputDecorationTheme(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black87, width: 2),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black87, width: 2),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            border: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.black87, width: 2),
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            fillColor: Color.fromRGBO(226, 226, 226, 30),
-            filled: true,
-            labelStyle: TextStyle(color: Colors.black54)),
-      ),
+      theme: appTheme(),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      //initialRoute: '/',
+      //routes: routes,
     );
   }
 }
@@ -90,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
           fontSize: 24,
           leadingDistribution: TextLeadingDistribution.even),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-      minimumSize: const Size(175, 60),
-      maximumSize: const Size.fromWidth(275),
+      minimumSize: const Size(150, 45),
+      maximumSize: const Size.fromWidth(270),
       side: const BorderSide(color: Colors.black87, width: 2),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -133,90 +106,59 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  const Padding(
+                    padding: EdgeInsets.only(left: 32, right:32, bottom: 16),
+                    child: Text(
+                      'Are you comfortable with sharing your location?',
+                      style: TextStyle(
+                          color: Color.fromRGBO(226, 226, 226, 30),
+                          fontWeight: FontWeight.w700),
+                    ),
+                  ),
                   Row(
-                    children: const [
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget> [
                       Padding(
-                        padding: EdgeInsets.only(top: 160, left: 32),
-                        child: Text(
-                          'Enter in PIN:',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Color.fromRGBO(226, 226, 226, 30),
-                              fontWeight: FontWeight.w700),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Container(
+                          decoration: dbstyle,
+                          child: OutlinedButton(
+                            style: bstyle,
+                            onPressed: () {
+                              // Validate will return true if the form is valid, or false if
+                              // the form is invalid.
+                              if (_formKey.currentState!.validate()) {
+                                // Process data.
+                              }
+                            },
+                            child: const Text(
+                              'Yes',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Container(
+                          decoration: dbstyle,
+                          child: OutlinedButton(
+                            style: bstyle,
+                            onPressed: () {
+                              // Validate will return true if the form is valid, or false if
+                              // the form is invalid.
+                              if (_formKey.currentState!.validate()) {
+                                // Process data.
+                              }
+                            },
+                            child: const Text(
+                              'No',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
                         ),
                       ),
                     ],
-                  ),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-                    child: Container(
-                      decoration: dbstyle,
-                      child: Form(
-                        key: _formKey,
-                        child: TextFormField(
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 20),
-                          decoration: const InputDecoration(
-                            hintText: 'XXX',
-                          ),
-                          keyboardType: const TextInputType.numberWithOptions(
-                              signed: true, decimal: true),
-                          obscuringCharacter: "•",
-                          obscureText: true,
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter in your PIN';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16, bottom: 8),
-                    child: Container(
-                      decoration: dbstyle,
-                      child: OutlinedButton(
-                        style: bstyle,
-                        onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
-                          if (_formKey.currentState!.validate()) {
-                            // Process data.
-                          }
-                        },
-                        child: const Text(
-                          'Submit',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    '911 for guest',
-                    style: TextStyle(
-                      fontSize: 28,
-                      color: Color.fromRGBO(226, 226, 226, 30),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 64),
-                    child: Container(
-                      decoration: dbstyle,
-                      child: OutlinedButton(
-                        style: bstyle,
-                        onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
-                        },
-                        child: const Text(
-                          'Create Emergency Profile',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
                   ),
                 ],
               ),
