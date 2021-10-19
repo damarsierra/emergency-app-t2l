@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:emergency_app_flutter/theme/style.dart';
+
+
 //replace screen name with screens functionality (underscores to separate words)
 class ScreenName extends StatefulWidget {
   const ScreenName({Key? key}) : super(key: key);
@@ -18,32 +21,6 @@ class _ScreenNameState extends State<ScreenName> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final ButtonStyle bstyle = OutlinedButton.styleFrom(
-      backgroundColor: const Color.fromRGBO(226, 226, 226, 30), // background
-      primary: Colors.black87, //text (foreground)
-      textStyle: const TextStyle(
-          fontFamily: 'RedHatText',
-          fontWeight: FontWeight.w500,
-          fontSize: 24,
-          leadingDistribution: TextLeadingDistribution.even),
-      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
-      minimumSize: const Size(150, 45),
-      maximumSize: const Size.fromWidth(270),
-      side: const BorderSide(color: Colors.black87, width: 2),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(12)),
-      ),
-    );
-    const BoxDecoration dbstyle = BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-          color: Color.fromRGBO(37, 37, 37, 25),
-          spreadRadius: 1,
-          blurRadius: 4,
-          offset: Offset(0, 4),
-        )
-      ],
-    );
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -64,6 +41,26 @@ class _ScreenNameState extends State<ScreenName> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                decoration: boxDecoration(),
+                child: OutlinedButton(
+                  style: buttonStyle(),
+                  onPressed: () {
+                    // Validate will return true if the form is valid, or false if
+                    // the form is invalid.
+                    if (_formKey.currentState!.validate()) {
+                      // Process data.
+                    }
+                  },
+                  child: const Text(
+                    'Hello!',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
             ),
           ],
