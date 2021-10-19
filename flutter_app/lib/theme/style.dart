@@ -34,3 +34,33 @@ ThemeData appTheme() {
         labelStyle: TextStyle(color: Colors.black54)),
   );
 }
+ButtonStyle buttonStyle() {
+  return OutlinedButton.styleFrom(
+    backgroundColor: const Color.fromRGBO(226, 226, 226, 30), // background
+    primary: Colors.black87, //text (foreground)
+    textStyle: const TextStyle(
+        fontFamily: 'RedHatText',
+        fontWeight: FontWeight.w500,
+        fontSize: 24,
+        leadingDistribution: TextLeadingDistribution.even),
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+    minimumSize: const Size(150, 45),
+    maximumSize: const Size.fromWidth(270),
+    side: const BorderSide(color: Colors.black87, width: 2),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(12)),
+    ),
+  );
+}
+BoxDecoration boxDecoration() {
+  return const BoxDecoration(
+    boxShadow: [
+      BoxShadow(
+        color: Color.fromRGBO(37, 37, 37, 25),
+        spreadRadius: 1,
+        blurRadius: 4,
+        offset: Offset(0, 4),
+      )
+    ],
+  );
+}
