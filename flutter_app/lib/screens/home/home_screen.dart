@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           // Validate will return true if the form is valid, or false if
                           // the form is invalid.
                           if (_formKey.currentState!.validate()) {
-                            // Process data.
+                            Navigator.pushNamed(context, '/GPSPerms');
                           }
                         },
                         child: const Text(
