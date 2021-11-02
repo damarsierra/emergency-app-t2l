@@ -18,6 +18,7 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Flexible(
               child: Column(
