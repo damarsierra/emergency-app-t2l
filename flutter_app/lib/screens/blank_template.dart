@@ -26,6 +26,7 @@ class _ScreenNameState extends State<ScreenName> {
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Row( //this can be changed
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Flexible(
               child: Column( //this can be changed
