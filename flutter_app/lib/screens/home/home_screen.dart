@@ -19,11 +19,20 @@ class _HomeScreenState extends State<HomeScreen> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    final emergController = TextEditingController();
+
+    @override
+    void dispose() {
+      // Clean up the controller when the widget is disposed.
+      emergController.dispose();
+      super.dispose();
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Flexible(
               child: Column(
@@ -60,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               signed: true, decimal: true),
                           obscuringCharacter: "•",
                           obscureText: true,
+                          controller: emergController,
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter in your PIN';
