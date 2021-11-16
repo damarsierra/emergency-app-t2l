@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: const TextStyle(fontSize: 20),
                           decoration: const InputDecoration(
                             hintText: 'XXX',
+                            contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                           ),
                           keyboardType: const TextInputType.numberWithOptions(
                               signed: true, decimal: true),
@@ -114,8 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: OutlinedButton(
                         style: buttonStyle(),
                         onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
+                          Navigator.pushNamed(context, '/NewUser');
                         },
                         child: const Text(
                           'Create Emergency Profile',
