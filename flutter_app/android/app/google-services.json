@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "433293896858",
+    "project_id": "emergency-app-214f0",
+    "storage_bucket": "emergency-app-214f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433293896858:android:9d241d078ce1ff81f48323",
+        "android_client_info": {
+          "package_name": "com.example.emergency_app_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433293896858-dpca9o71b67fgvsc2csthb1vkmp3f2ek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_LZYHkRkYa5qsrrx7TNXrK_2abDauyV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "433293896858-dpca9o71b67fgvsc2csthb1vkmp3f2ek.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
