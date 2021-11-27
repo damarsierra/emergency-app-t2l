@@ -12,119 +12,101 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    final emergController = TextEditingController();
-
-    @override
-    void dispose() {
-      // Clean up the controller when the widget is disposed.
-      emergController.dispose();
-      super.dispose();
-    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
-        child: Row(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Row(
-                    children: const [
-                      Padding(
-                        padding: EdgeInsets.only(top: 165, left: 32),
-                        child: Text(
-                          'Enter in PIN:',
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Color.fromRGBO(226, 226, 226, 30),
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-                    child: Container(
-                      decoration: boxDecoration(),
-                      child: Form(
-                        key: _formKey,
-                        child: TextFormField(
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(fontSize: 20),
-                          decoration: const InputDecoration(
-                            hintText: 'XXX',
-                            contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
-                          ),
-                          keyboardType: const TextInputType.numberWithOptions(
-                              signed: true, decimal: true),
-                          obscuringCharacter: "•",
-                          obscureText: true,
-                          controller: emergController,
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter in your PIN';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8, bottom: 8),
-                    child: Container(
-                      decoration: boxDecoration(),
-                      child: OutlinedButton(
-                        style: buttonStyle(),
-                        onPressed: () {
-                          // Validate will return true if the form is valid, or false if
-                          // the form is invalid.
-                          if (_formKey.currentState!.validate()) {
-                            Navigator.pushNamed(context, '/GPSPerms');
-                          }
-                        },
-                        child: const Text(
-                          'Submit',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Text(
-                    '911 for guest',
+            Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.only(top: 165, left: 32),
+                  child: Text(
+                    'Enter in PIN:',
+                    textAlign: TextAlign.left,
                     style: TextStyle(
-                      fontSize: 28,
-                      color: Color.fromRGBO(226, 226, 226, 30),
-                    ),
+                        color: Color.fromRGBO(226, 226, 226, 30),
+                        fontWeight: FontWeight.w700),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 60),
-                    child: Container(
-                      decoration: boxDecoration(),
-                      child: OutlinedButton(
-                        style: buttonStyle(),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/NewUser');
-                        },
-                        child: const Text(
-                          'Create Emergency Profile',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                ),
+              ],
+            ),
+            Padding(
+              padding:
+              const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+              child: Container(
+                decoration: boxDecoration(),
+                child: Form(
+                  key: _formKey,
+                  child: TextFormField(
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      hintText: 'XXX',
+                      contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                     ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                        signed: true, decimal: true),
+                    obscuringCharacter: "•",
+                    obscureText: true,
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter in your PIN';
+                      } else if (value.length > 3 || value.length < 3) {
+                        return 'PIN is 3 numbers long.';
+                      } else if (value != '911') {
+                        return 'PIN is not valid';
+                      }
+                      return null;
+                    },
                   ),
-                ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 8),
+              child: Container(
+                decoration: boxDecoration(),
+                child: OutlinedButton(
+                  style: buttonStyle(),
+                  onPressed: () {
+                    // Validate will return true if the form is valid, or false if
+                    // the form is invalid.
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pushNamed(context, '/GPSPerms');
+                    }
+                  },
+                  child: const Text(
+                    'Submit',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+            const Text(
+              '911 for guest',
+              style: TextStyle(
+                fontSize: 28,
+                color: Color.fromRGBO(226, 226, 226, 30),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 60),
+              child: Container(
+                decoration: boxDecoration(),
+                child: OutlinedButton(
+                  style: buttonStyle(),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/NewUser');
+                  },
+                  child: const Text(
+                    'Create Emergency Profile',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
             ),
           ],
