@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:emergency_app_flutter/theme/style.dart';
+import 'package:emergency_app_flutter/screens/emergency_profile/emergency_profile_screen.dart';
 
 class GPSPermsScreen extends StatefulWidget {
   const GPSPermsScreen({Key? key}) : super(key: key);
@@ -10,9 +13,20 @@ class GPSPermsScreen extends StatefulWidget {
 }
 
 class _GPSPermsScreenState extends State<GPSPermsScreen> {
+  late Position _currentPosition;
+
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    CollectionReference user =
+        FirebaseFirestore.instance.collection('emergency_profile');
+
+    Future<void> addLocation(GeoPoint latitude, GeoPoint longitude) {
+      return user
+          .doc(phoneNum)
+          .update({'latitude': latitude, 'longitude': longitude})
+          .then((value) => print("Info Added"))
+          .catchError((error) => print("Failed to add info: $error"));
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -25,7 +39,7 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const Padding(
-                    padding: EdgeInsets.only(left: 32, right:32, bottom: 16),
+                    padding: EdgeInsets.only(left: 32, right: 32, bottom: 16),
                     child: Text(
                       'Are you comfortable with sharing your location?',
                       style: TextStyle(
@@ -35,7 +49,7 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget> [
+                    children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
                         child: Container(
@@ -43,11 +57,9 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-                              // Validate will return true if the form is valid, or false if
-                              // the form is invalid.
-                              if (_formKey.currentState!.validate()) {
-                                // Process data.
-                              }
+                              _getCurrentLocation();
+                              addLocation(_currentPosition.latitude as GeoPoint,
+                                  _currentPosition.longitude as GeoPoint);
                             },
                             child: const Text(
                               'Yes',
@@ -62,13 +74,7 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
                           decoration: boxDecoration(),
                           child: OutlinedButton(
                             style: buttonStyle(),
-                            onPressed: () {
-                              // Validate will return true if the form is valid, or false if
-                              // the form is invalid.
-                              if (_formKey.currentState!.validate()) {
-                                // Process data.
-                              }
-                            },
+                            onPressed: () {},
                             child: const Text(
                               'No',
                               textAlign: TextAlign.center,
@@ -85,5 +91,18 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
         ),
       ),
     );
+  }
+
+  _getCurrentLocation() {
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best,
+            forceAndroidLocationManager: true)
+        .then((Position position) {
+      setState(() {
+        _currentPosition = position;
+      });
+    }).catchError((e) {
+      print(e);
+    });
   }
 }
