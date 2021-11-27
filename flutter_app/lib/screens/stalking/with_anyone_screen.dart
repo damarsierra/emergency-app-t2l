@@ -20,10 +20,10 @@ class _WithAnyoneScreen extends State<WithAnyoneScreen> {
         .doc(phoneNum)
         .collection('reports');
 
-    Future<void> addToReport(String morePeople) {
+    Future<void> addToReport(String anyoneElse) {
       return reports
           .doc('stalking_report')
-          .update({'more_people': morePeople})
+          .update({'anyone_else': anyoneElse})
           .then((value) => print("Info Added"))
           .catchError((error) => print("Failed to add info: $error"));
     }
@@ -56,7 +56,8 @@ class _WithAnyoneScreen extends State<WithAnyoneScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-
+                              addToReport("Yes");
+                              Navigator.pushNamed(context, '/SuccessSubmit');
                               // Process data.
                             },
                             child: const Text(
@@ -73,7 +74,8 @@ class _WithAnyoneScreen extends State<WithAnyoneScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-
+                              addToReport("No");
+                              Navigator.pushNamed(context, '/SuccessSubmit');
                               // Process data.
                             },
                             child: const Text(

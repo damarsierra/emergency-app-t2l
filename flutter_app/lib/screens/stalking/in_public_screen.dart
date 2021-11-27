@@ -56,8 +56,8 @@ class _InPublicScreen extends State<InPublicScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/WithAnyone');
                               addToReport("Yes");
+                              Navigator.pushNamed(context, '/WithAnyone');
                             },
                             child: const Text(
                               'Yes',
@@ -73,8 +73,8 @@ class _InPublicScreen extends State<InPublicScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/WithAnyone');
                               addToReport("No");
+                              Navigator.pushNamed(context, '/WithAnyone');
                             },
                             child: const Text(
                               'No',

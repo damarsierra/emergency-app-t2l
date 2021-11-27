@@ -64,9 +64,9 @@ class _ArmedStalkingScreen extends State<ArmedStalkingScreen> {
                                 child: OutlinedButton(
                                   style: buttonStyle(),
                                   onPressed: () {
+                                    addToReport("Yes");
                                     Navigator.pushNamed(
                                         context, '/DoingCurrently');
-                                    addToReport("Yes");
                                   },
                                   child: const Text(
                                     'Yes',
@@ -83,9 +83,9 @@ class _ArmedStalkingScreen extends State<ArmedStalkingScreen> {
                                 child: OutlinedButton(
                                   style: buttonStyle(),
                                   onPressed: () {
+                                    addToReport("No");
                                     Navigator.pushNamed(
                                         context, '/DoingCurrently');
-                                    addToReport("No");
                                   },
                                   child: const Text(
                                     'No',
@@ -108,9 +108,9 @@ class _ArmedStalkingScreen extends State<ArmedStalkingScreen> {
                               child: OutlinedButton(
                                 style: buttonStyle(),
                                 onPressed: () {
+                                  addToReport("Not sure");
                                   Navigator.pushNamed(
                                       context, '/DoingCurrently');
-                                  addToReport("Not sure");
                                 },
                                 child: const Text(
                                   "I don't know",

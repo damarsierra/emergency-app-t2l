@@ -53,9 +53,9 @@ class _DoingCurrentlyScreen extends State<DoingCurrentlyScreen> {
                       child: OutlinedButton(
                         style: buttonStyle(),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/Recognize');
                           whatDoing = "Can't respond";
                           addToReport();
+                          Navigator.pushNamed(context, '/Recognize');
                         },
                         child: const Text(
                           "Can't respond",
@@ -77,7 +77,7 @@ class _DoingCurrentlyScreen extends State<DoingCurrentlyScreen> {
                       ),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter in your PIN';
+                          return 'Please enter in value';
                         }
                         whatDoing = value;
                         return null;
@@ -91,8 +91,8 @@ class _DoingCurrentlyScreen extends State<DoingCurrentlyScreen> {
                       child: OutlinedButton(
                         style: buttonStyle(),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/Recognize');
                           addToReport();
+                          Navigator.pushNamed(context, '/Recognize');
                         },
                         child: const Text(
                           'Submit',

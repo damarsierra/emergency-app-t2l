@@ -200,8 +200,8 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Creating Profile...')),
                         );
-                        Navigator.pushNamed(context, '/GPSPerms');
                         addUser();
+                        Navigator.pushNamed(context, '/GPSPerms');
                       }
                     },
                     child: const Text(

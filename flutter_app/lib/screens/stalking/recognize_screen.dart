@@ -56,8 +56,8 @@ class _RecognizeScreen extends State<RecognizeScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/HaveDone');
                               addToReport("Yes");
+                              Navigator.pushNamed(context, '/HaveDone');
                             },
                             child: const Text(
                               'Yes',
@@ -73,8 +73,8 @@ class _RecognizeScreen extends State<RecognizeScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
+                              addToReport("No");
                               Navigator.pushNamed(context, '/HaveDone');
-                                addToReport("No");
                             },
                             child: const Text(
                               'No',

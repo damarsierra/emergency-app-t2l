@@ -55,8 +55,8 @@ class _StalkingScreenState extends State<StalkingScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/ArmedStalking');
                               addToReport("Man");
+                              Navigator.pushNamed(context, '/ArmedStalking');
                             },
                             child: const Text(
                               'Man',
@@ -72,8 +72,8 @@ class _StalkingScreenState extends State<StalkingScreen> {
                           child: OutlinedButton(
                             style: buttonStyle(),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/ArmedStalking');
                               addToReport("Woman");
+                              Navigator.pushNamed(context, '/ArmedStalking');
                             },
                             child: const Text(
                               'Woman',
@@ -96,8 +96,8 @@ class _StalkingScreenState extends State<StalkingScreen> {
                         child: OutlinedButton(
                           style: buttonStyle(),
                           onPressed: () {
-                            Navigator.pushNamed(context, '/ArmedStalking');
                             addToReport("Not Sure");
+                            Navigator.pushNamed(context, '/ArmedStalking');
                           },
                           child: const Text(
                             "I don't know",

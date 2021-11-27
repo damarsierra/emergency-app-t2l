@@ -60,6 +60,7 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
                               _getCurrentLocation();
                               addLocation(_currentPosition.latitude as GeoPoint,
                                   _currentPosition.longitude as GeoPoint);
+                              Navigator.pushNamed(context, '/SelectCrime');
                             },
                             child: const Text(
                               'Yes',
@@ -74,7 +75,9 @@ class _GPSPermsScreenState extends State<GPSPermsScreen> {
                           decoration: boxDecoration(),
                           child: OutlinedButton(
                             style: buttonStyle(),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/SelectCrime');
+                            },
                             child: const Text(
                               'No',
                               textAlign: TextAlign.center,
