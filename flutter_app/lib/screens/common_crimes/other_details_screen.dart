@@ -67,7 +67,7 @@ class _OtherDetailsScreen extends State<OtherDetailsScreen> {
                   style: buttonStyle(),
                   onPressed: () {
                     addToReport(personRace);
-                    // Process data.
+                    Navigator.pushNamed(context, '/SuccessSubmit');
                   },
                   child: const Text(
                     'Submit',
