@@ -16,9 +16,7 @@ class _StalkingScreenState extends State<StalkingScreen> {
   @override
   Widget build(BuildContext context) {
     CollectionReference reports = FirebaseFirestore.instance
-        .collection('emergency_profile')
-        .doc(phoneNum)
-        .collection('reports');
+        .collection('emergency_profile').doc(phoneNum).collection('reports');
 
     Future<void> addToReport(String personSex) {
       return reports
@@ -27,7 +25,6 @@ class _StalkingScreenState extends State<StalkingScreen> {
           .then((value) => print("Info Added"))
           .catchError((error) => print("Failed to add info: $error"));
     }
-
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Center(
