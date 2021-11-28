@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:emergency_app_flutter/theme/style.dart';
+import 'package:emergency_app_flutter/screens/emergency_profile/emergency_profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -13,6 +15,35 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    bool _phoneNumValidator(String value) {
+      RegExp regex1 = RegExp(
+          r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$');
+      if (value.length != 10 || value.isEmpty) {
+        return true;
+      } else if (!regex1.hasMatch(value)) {
+        return true;
+      } else {
+        String newStr = value.replaceAll(r'[^0-9]', '');
+        phoneNum = newStr;
+        return false;
+      }
+    }
+
+    bool _phoneNumExist(String value) {
+      bool result = false;
+      FirebaseFirestore.instance
+          .collection('emergency_profile')
+          .doc(value)
+          .get()
+          .then((DocumentSnapshot docSnap) {
+        if (docSnap.exists) {
+          result = true;
+        } else {
+          result = false;
+        }
+      });
+      return result;
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -35,8 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
             Padding(
-              padding:
-              const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
               child: Container(
                 decoration: boxDecoration(),
                 child: Form(
@@ -45,20 +75,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     textAlign: TextAlign.left,
                     style: const TextStyle(fontSize: 20),
                     decoration: const InputDecoration(
-                      hintText: 'XXX',
-                      contentPadding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                      hintText: 'XXX-XXX-XXXX',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 10.0),
                     ),
                     keyboardType: const TextInputType.numberWithOptions(
                         signed: true, decimal: true),
-                    obscuringCharacter: "•",
-                    obscureText: true,
                     validator: (String? value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter in your PIN';
-                      } else if (value.length > 3 || value.length < 3) {
-                        return 'PIN is 3 numbers long.';
-                      } else if (value != '911') {
-                        return 'PIN is not valid';
+                      if (_phoneNumValidator(value!)) {
+                        return 'Please enter in a valid phone number';
+                      } else if (value != '911' || !(_phoneNumExist(value))) {
+                        return 'Please enter in a valid phone number';
+                      } else if (value == '911') {
+                        FirebaseFirestore.instance
+                            .collection('emergency_profile')
+                            .add({
+                          'firstName': '',
+                          'last_name': '',
+                          'phone_num': ''
+                        }).then((DocumentReference docRef) =>
+                                {phoneNum = docRef.id});
+                        return null;
+                      } else if (_phoneNumExist(value)) {
+                        phoneNum = value;
+                        return null;
                       }
                       return null;
                     },
