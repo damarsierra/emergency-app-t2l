@@ -55,7 +55,7 @@ class _SelectCrimeScreenState extends State<SelectCrimeScreen> {
                     child: OutlinedButton(
                       style: buttonStyle(),
                       onPressed: () {
-                        Navigator.pushNamed(context, '/lll');
+                        Navigator.pushNamed(context, '/CommonCrime');
                       },
                       child: const Text(
                         'Common Crime',
