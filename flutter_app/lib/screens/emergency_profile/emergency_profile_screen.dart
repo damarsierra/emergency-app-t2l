@@ -33,16 +33,14 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
           .catchError((error) => print("Failed to add info: $error"));
     }
 
-    bool _phoneNumValidator(String value) {
+    bool _phoneNumRegEx(String value) {
       RegExp regex1 = RegExp(
           r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$');
-      if (value.length != 10 || value.isEmpty) {
+      if (value.isEmpty) {
         return true;
       } else if (!regex1.hasMatch(value)) {
         return true;
       } else {
-        String newStr = value.replaceAll(r'[^0-9]', '');
-        phoneNum = newStr;
         return false;
       }
     }
@@ -95,23 +93,21 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
                 child: Container(
                   decoration: boxDecoration(),
-                  child: Form(
-                    child: TextFormField(
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(fontSize: 20),
-                      decoration: const InputDecoration(
-                        hintText: 'John',
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 10.0),
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Enter in your first name';
-                        }
-                        firstName = value;
-                        return null;
-                      },
+                  child: TextFormField(
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      hintText: 'John',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 10.0),
                     ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter in your first name';
+                      }
+                      firstName = value;
+                      return null;
+                    },
                   ),
                 ),
               ),
@@ -127,23 +123,21 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
                 child: Container(
                   decoration: boxDecoration(),
-                  child: Form(
-                    child: TextFormField(
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(fontSize: 20),
-                      decoration: const InputDecoration(
-                        hintText: 'Doe',
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 10.0),
-                      ),
-                      validator: (String? value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Enter in your last name';
-                        }
-                        lastName = value;
-                        return null;
-                      },
+                  child: TextFormField(
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      hintText: 'Doe',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 10.0),
                     ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter in your last name';
+                      }
+                      lastName = value;
+                      return null;
+                    },
                   ),
                 ),
               ),
@@ -159,69 +153,30 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
                 child: Container(
                   decoration: boxDecoration(),
-                  child: Form(
-                    child: TextFormField(
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(fontSize: 20),
-                      decoration: const InputDecoration(
-                        hintText: 'XXX-XXX-XXXX',
-                        contentPadding: EdgeInsets.symmetric(
-                            vertical: 15.0, horizontal: 10.0),
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                          signed: true, decimal: true),
-                      validator: (String? value) {
-                        if (_phoneNumValidator(value!) || value == '911') {
-                          return 'Please enter in a valid phone number';
-                        } else if (!(_phoneNumExist(value))) {
-                          return 'This phone number already exists';
-                        } else if (_phoneNumExist(value)) {
-                          phoneNum = value;
-                          return null;
-                        }
-                        return null;
-                      },
+                  child: TextFormField(
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      hintText: 'XXX-XXX-XXXX',
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 15.0, horizontal: 10.0),
                     ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                        signed: true, decimal: true),
+                    validator: (String? value) {
+                      if (_phoneNumRegEx(value!)) {
+                        return 'Please enter in a valid phone number';
+                      } else if (_phoneNumExist(value)) {
+                        return 'Please enter in a valid phone number';
+                      } else {
+                        String newStr = value.replaceAll(r'[^0-9]', '');
+                        phoneNum = newStr;
+                        return null;
+                      }
+                    },
                   ),
                 ),
               ),
-              // const Text(
-              //   'Create PIN',
-              //   style: TextStyle(
-              //     fontSize: 22,
-              //     color: Color.fromRGBO(226, 226, 226, 30),
-              //   ),
-              // ),
-              // Padding(
-              //   padding:
-              //       const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              //   child: Container(
-              //     decoration: boxDecoration(),
-              //     child: Form(
-              //       child: TextFormField(
-              //         textAlign: TextAlign.left,
-              //         style: const TextStyle(fontSize: 20),
-              //         decoration: const InputDecoration(
-              //           hintText: 'XXX',
-              //           contentPadding: EdgeInsets.symmetric(
-              //               vertical: 15.0, horizontal: 10.0),
-              //         ),
-              //         keyboardType: const TextInputType.numberWithOptions(
-              //             signed: true, decimal: true),
-              //         obscuringCharacter: "•",
-              //         obscureText: true,
-              //         validator: (String? value) {
-              //           if (value == null || value.isEmpty) {
-              //             return 'Create your PIN';
-              //           } else if (value.length > 3 || value.length < 3) {
-              //             return 'PIN must be 3 numbers long.';
-              //           }
-              //           return null;
-              //         },
-              //       ),
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(top: 8, bottom: 8),
                 child: Container(
@@ -230,10 +185,10 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
                     style: buttonStyle(),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        addUser();
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(content: Text('Creating Profile...')),
                         );
-                        addUser();
                         Navigator.pushNamed(context, '/GPSPerms');
                       }
                     },
