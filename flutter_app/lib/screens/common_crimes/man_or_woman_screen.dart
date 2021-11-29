@@ -77,32 +77,24 @@ class _ManOrWomanScreen extends State<ManOrWomanScreen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget> [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Container(
-                          decoration: boxDecoration(),
-                          child: OutlinedButton(
-                            style: buttonStyle(),
-                            onPressed: () {
-                              addToReport("Not Sure");
-                              Navigator.pushNamed(context, '/ArmedStalking');
-                            },
-                            child: const Text(
-                              "I don't know",
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                decoration: boxDecoration(),
+                child: OutlinedButton(
+                  style: buttonStyle(),
+                  onPressed: () {
+                    addToReport("Not Sure");
+                    Navigator.pushNamed(context, '/ArmedStalking');
+                  },
+                  child: const Text(
+                    "I don't know",
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
