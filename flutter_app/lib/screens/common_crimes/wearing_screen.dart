@@ -14,6 +14,7 @@ class WearingScreen extends StatefulWidget {
 class _WearingScreen extends State<WearingScreen> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     CollectionReference reports = FirebaseFirestore.instance
         .collection('emergency_profile')
         .doc(phoneNum)
@@ -45,21 +46,24 @@ class _WearingScreen extends State<WearingScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              child: TextFormField(
-                textAlign: TextAlign.left,
-                style: const TextStyle(fontSize: 20),
-                maxLines: 15,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'They were wearing..',
-                  alignLabelWithHint: true,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 20),
+                  maxLines: 10,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'They were wearing..',
+                    alignLabelWithHint: true,
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter in value';
+                    }
+                    whatWear = value;
+                  },
                 ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter in value';
-                  }
-                  whatWear = value;
-                },
               ),
             ),
             Padding(
@@ -69,8 +73,10 @@ class _WearingScreen extends State<WearingScreen> {
                 child: OutlinedButton(
                   style: buttonStyle(),
                   onPressed: () {
-                    addToReport(whatWear);
-                    Navigator.pushNamed(context, '/ManOrWoman');
+                    if (_formKey.currentState!.validate()) {
+                      addToReport(whatWear);
+                      Navigator.pushNamed(context, '/ManOrWoman');
+                    }
                   },
                   child: const Text(
                     'Submit',

@@ -14,6 +14,7 @@ class OtherDetailsScreen extends StatefulWidget {
 class _OtherDetailsScreen extends State<OtherDetailsScreen> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     CollectionReference reports = FirebaseFirestore.instance
         .collection('emergency_profile')
         .doc(phoneNum)
@@ -45,21 +46,24 @@ class _OtherDetailsScreen extends State<OtherDetailsScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              child: TextFormField(
-                textAlign: TextAlign.left,
-                style: const TextStyle(fontSize: 20),
-                maxLines: 15,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter response here..',
-                  alignLabelWithHint: true,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 20),
+                  maxLines: 10,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter response here..',
+                    alignLabelWithHint: true,
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter in value';
+                    }
+                    personRace = value;
+                  },
                 ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter in value';
-                  }
-                  personRace = value;
-                },
               ),
             ),
             Padding(
@@ -69,8 +73,10 @@ class _OtherDetailsScreen extends State<OtherDetailsScreen> {
                 child: OutlinedButton(
                   style: buttonStyle(),
                   onPressed: () {
-                    addToReport(personRace);
-                    Navigator.pushNamed(context, '/SuccessSubmit');
+                    if (_formKey.currentState!.validate()) {
+                      addToReport(personRace);
+                      Navigator.pushNamed(context, '/SuccessSubmit');
+                    }
                   },
                   child: const Text(
                     'Submit',

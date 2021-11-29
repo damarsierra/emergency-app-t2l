@@ -14,19 +14,20 @@ class WhereItHappenedScreen extends StatefulWidget {
 class _WhereItHappenedScreen extends State<WhereItHappenedScreen> {
   @override
   Widget build(BuildContext context) {
-      CollectionReference reports = FirebaseFirestore.instance
-          .collection('emergency_profile')
-          .doc(phoneNum)
-          .collection('reports');
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    CollectionReference reports = FirebaseFirestore.instance
+        .collection('emergency_profile')
+        .doc(phoneNum)
+        .collection('reports');
 
-      String whereHappened = '';
-      Future<void> addToReport(String value) {
-        return reports
-            .doc('common_crime_report')
-            .update({'where_happened': value})
-            .then((value) => print("Info Added"))
-            .catchError((error) => print("Failed to add info: $error"));
-      }
+    String whereHappened = '';
+    Future<void> addToReport(String value) {
+      return reports
+          .doc('common_crime_report')
+          .update({'where_happened': value})
+          .then((value) => print("Info Added"))
+          .catchError((error) => print("Failed to add info: $error"));
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -45,21 +46,24 @@ class _WhereItHappenedScreen extends State<WhereItHappenedScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              child: TextFormField(
-                textAlign: TextAlign.left,
-                style: const TextStyle(fontSize: 20),
-                maxLines: 15,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter response here..',
-                  alignLabelWithHint: true,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 20),
+                  maxLines: 10,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter response here..',
+                    alignLabelWithHint: true,
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter in value';
+                    }
+                    whereHappened = value;
+                  },
                 ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter in value';
-                  }
-                  whereHappened = value;
-                },
               ),
             ),
             Padding(
@@ -69,8 +73,10 @@ class _WhereItHappenedScreen extends State<WhereItHappenedScreen> {
                 child: OutlinedButton(
                   style: buttonStyle(),
                   onPressed: () {
-                    addToReport(whereHappened);
-                    Navigator.pushNamed(context, '/SeePerpetrator');
+                    if (_formKey.currentState!.validate()) {
+                      addToReport(whereHappened);
+                      Navigator.pushNamed(context, '/SeePerpetrator');
+                    }
                   },
                   child: const Text(
                     'Submit',
@@ -80,7 +86,6 @@ class _WhereItHappenedScreen extends State<WhereItHappenedScreen> {
               ),
             ),
           ],
-
         ),
       ),
     );

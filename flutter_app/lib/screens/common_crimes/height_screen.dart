@@ -14,6 +14,7 @@ class HeightScreen extends StatefulWidget {
 class _HeightScreen extends State<HeightScreen> {
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     CollectionReference reports = FirebaseFirestore.instance
         .collection('emergency_profile')
         .doc(phoneNum)
@@ -45,20 +46,23 @@ class _HeightScreen extends State<HeightScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              child: TextFormField(
-                  textAlign: TextAlign.left,
-                  style: const TextStyle(fontSize: 20),
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter response here..',
-                    alignLabelWithHint: true,
-                  ),
-                  validator: (String? value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter in value';
-                    }
-                    personHeight = value;
-                  },
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(fontSize: 20),
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter response here..',
+                      alignLabelWithHint: true,
+                    ),
+                    validator: (String? value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter in value';
+                      }
+                      personHeight = value;
+                    },
+                ),
               ),
             ),
             Padding(
@@ -68,9 +72,10 @@ class _HeightScreen extends State<HeightScreen> {
                 child: OutlinedButton(
                   style: buttonStyle(),
                   onPressed: () {
-                    addToReport(personHeight);
-                    Navigator.pushNamed(context, '/Race');
-                    // Process data.
+                    if (_formKey.currentState!.validate()) {
+                      addToReport(personHeight);
+                      Navigator.pushNamed(context, '/Race');
+                    }
                   },
                   child: const Text(
                     'Submit',

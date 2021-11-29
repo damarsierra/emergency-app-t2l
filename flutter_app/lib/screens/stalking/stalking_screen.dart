@@ -21,7 +21,7 @@ class _StalkingScreenState extends State<StalkingScreen> {
     Future<void> addToReport(String personSex) {
       return reports
           .doc('stalking_report')
-          .update({'person_sex': personSex})
+          .set({'person_sex': personSex})
           .then((value) => print("Info Added"))
           .catchError((error) => print("Failed to add info: $error"));
     }

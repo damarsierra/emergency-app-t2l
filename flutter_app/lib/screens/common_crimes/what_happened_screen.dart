@@ -12,17 +12,19 @@ class WhatHappenedScreen extends StatefulWidget {
 }
 
 class _WhatHappenedScreen extends State<WhatHappenedScreen> {
-
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     CollectionReference reports = FirebaseFirestore.instance
-        .collection('emergency_profile').doc(phoneNum).collection('reports');
+        .collection('emergency_profile')
+        .doc(phoneNum)
+        .collection('reports');
 
     String whatHappened = '';
     Future<void> addToReport(String value) {
       return reports
           .doc('common_crime_report')
-          .update({'what_happened': value})
+          .set({'what_happened': value})
           .then((value) => print("Info Added"))
           .catchError((error) => print("Failed to add info: $error"));
     }
@@ -44,21 +46,24 @@ class _WhatHappenedScreen extends State<WhatHappenedScreen> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
-              child: TextFormField(
-                textAlign: TextAlign.left,
-                style: const TextStyle(fontSize: 20),
-                maxLines: 15,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter response here..',
-                  alignLabelWithHint: true,
+              child: Form(
+                key: _formKey,
+                child: TextFormField(
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 20),
+                  maxLines: 10,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter response here..',
+                    alignLabelWithHint: true,
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter in value';
+                    }
+                    whatHappened = value;
+                  },
                 ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter in value';
-                  }
-                  whatHappened = value;
-                },
               ),
             ),
             Padding(
@@ -68,8 +73,10 @@ class _WhatHappenedScreen extends State<WhatHappenedScreen> {
                 child: OutlinedButton(
                   style: buttonStyle(),
                   onPressed: () {
-                    addToReport(whatHappened);
-                    Navigator.pushNamed(context, '/WhenItHappened');
+                    if (_formKey.currentState!.validate()) {
+                      addToReport(whatHappened);
+                      Navigator.pushNamed(context, '/WhenItHappened');
+                    }
                   },
                   child: const Text(
                     'Submit',
