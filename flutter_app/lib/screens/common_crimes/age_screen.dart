@@ -11,7 +11,7 @@ class AgeScreen extends StatefulWidget {
   State<AgeScreen> createState() => _AgeScreen();
 }
 
-double _currentSliderValue = 10;
+double _currentSliderValue = 34;
 Color gray = const Color.fromRGBO(204, 204, 204, 255);
 
 class _AgeScreen extends State<AgeScreen> {
@@ -31,61 +31,58 @@ class _AgeScreen extends State<AgeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: Center(
-        child: Row(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Flexible(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  const Padding(
-                    padding: EdgeInsets.only(left: 32, right: 32, bottom: 16),
-                    child: Text(
-                      'How old are they?',
-                      style: TextStyle(
-                          color: Color.fromRGBO(226, 226, 226, 30),
-                          fontWeight: FontWeight.w700),
+            const Padding(
+              padding: EdgeInsets.only(left: 32, right: 32, bottom: 16),
+              child: Text(
+                'How old are they?',
+                style: TextStyle(
+                    color: Color.fromRGBO(226, 226, 226, 30),
+                    fontWeight: FontWeight.w700),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Slider(
+                value: _currentSliderValue,
+                min: 18,
+                max: 70,
+                divisions: 52,
+
+                activeColor: Colors.grey[600],
+                inactiveColor: Colors.grey[600],
+                thumbColor: Colors.grey[700],
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 60),
+                  child: Container(
+                    decoration: boxDecoration(),
+                    child: OutlinedButton(
+                      style: buttonStyle(),
+                      onPressed: () {
+                        addToReport(_currentSliderValue);
+                        Navigator.pushNamed(context, '/Height');
+                      },
+                      child: const Text(
+                        'Submit',
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   ),
-                  Slider(
-                    value: _currentSliderValue,
-                    min: 18,
-                    max: 70,
-                    divisions: 52,
-
-                    activeColor: Colors.grey[600],
-                    inactiveColor: Colors.grey[600],
-                    thumbColor: Colors.grey[700],
-                    label: _currentSliderValue.round().toString(),
-                    onChanged: (double value) {
-                      setState(() {
-                        _currentSliderValue = value;
-                      });
-                    },
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 60),
-                        child: Container(
-                          decoration: boxDecoration(),
-                          child: OutlinedButton(
-                            style: buttonStyle(),
-                            onPressed: () {
-                              addToReport(_currentSliderValue);
-                              Navigator.pushNamed(context, '/Height');
-                            },
-                            child: const Text(
-                              'Submit',
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),
