@@ -43,21 +43,24 @@ class _WhatHappenedScreen extends State<WhatHappenedScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            TextFormField(
-              textAlign: TextAlign.left,
-              style: const TextStyle(fontSize: 20),
-              maxLines: 15,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter response here..',
-                alignLabelWithHint: true,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+              child: TextFormField(
+                textAlign: TextAlign.left,
+                style: const TextStyle(fontSize: 20),
+                maxLines: 15,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter response here..',
+                  alignLabelWithHint: true,
+                ),
+                validator: (String? value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter in value';
+                  }
+                  whatHappened = value;
+                },
               ),
-              validator: (String? value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter in value';
-                }
-                whatHappened = value;
-              },
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),

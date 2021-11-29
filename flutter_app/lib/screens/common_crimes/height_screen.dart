@@ -43,20 +43,23 @@ class _HeightScreen extends State<HeightScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            TextFormField(
-                textAlign: TextAlign.left,
-                style: const TextStyle(fontSize: 20),
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter response here..',
-                  alignLabelWithHint: true,
-                ),
-                validator: (String? value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter in value';
-                  }
-                  personHeight = value;
-                },
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 32),
+              child: TextFormField(
+                  textAlign: TextAlign.left,
+                  style: const TextStyle(fontSize: 20),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter response here..',
+                    alignLabelWithHint: true,
+                  ),
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter in value';
+                    }
+                    personHeight = value;
+                  },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),

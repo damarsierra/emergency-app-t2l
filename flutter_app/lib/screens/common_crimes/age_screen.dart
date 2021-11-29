@@ -43,21 +43,24 @@ class _AgeScreen extends State<AgeScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            Slider(
-              value: _currentSliderValue,
-              min: 0,
-              max: 20,
-              divisions: 20,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Slider(
+                value: _currentSliderValue,
+                min: 0,
+                max: 20,
+                divisions: 20,
 
-              activeColor: Colors.grey[600],
-              inactiveColor: Colors.grey[600],
-              thumbColor: Colors.grey[700],
-              label: _currentSliderValue.round().toString(),
-              onChanged: (double value) {
-                setState(() {
-                  _currentSliderValue = value;
-                });
-              },
+                activeColor: Colors.grey[600],
+                inactiveColor: Colors.grey[600],
+                thumbColor: Colors.grey[700],
+                label: _currentSliderValue.round().toString(),
+                onChanged: (double value) {
+                  setState(() {
+                    _currentSliderValue = value;
+                  });
+                },
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
