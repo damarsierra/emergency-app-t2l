@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -32,9 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
     bool _phoneNumExist(String value) {
       bool result = false;
+      String newStr = value.replaceAll(r'[^0-9]', '');
       FirebaseFirestore.instance
           .collection('emergency_profile')
-          .doc(value)
+          .doc(newStr)
           .get()
           .then((DocumentSnapshot docSnap) {
         if (docSnap.exists) {

@@ -47,9 +47,10 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
 
     bool _phoneNumExist(String value) {
       bool result = false;
+      String newStr = value.replaceAll(r'[^0-9]', '');
       FirebaseFirestore.instance
           .collection('emergency_profile')
-          .doc(value)
+          .doc(newStr)
           .get()
           .then((DocumentSnapshot docSnap) {
         if (docSnap.exists) {
