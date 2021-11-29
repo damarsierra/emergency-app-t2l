@@ -12,12 +12,11 @@ class WhatHappenedScreen extends StatefulWidget {
 }
 
 class _WhatHappenedScreen extends State<WhatHappenedScreen> {
+
   @override
   Widget build(BuildContext context) {
     CollectionReference reports = FirebaseFirestore.instance
-        .collection('emergency_profile')
-        .doc(phoneNum)
-        .collection('reports');
+        .collection('emergency_profile').doc(phoneNum).collection('reports');
 
     String whatHappened = '';
     Future<void> addToReport(String value) {
