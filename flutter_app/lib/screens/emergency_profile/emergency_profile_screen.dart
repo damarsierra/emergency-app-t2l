@@ -97,7 +97,6 @@ class _EmergencyProfileState extends State<EmergencyProfile> {
                   decoration: boxDecoration(),
                   child: Form(
                     child: TextFormField(
-                      key: _formKey,
                       textAlign: TextAlign.left,
                       style: const TextStyle(fontSize: 20),
                       decoration: const InputDecoration(
