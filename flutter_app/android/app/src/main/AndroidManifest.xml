@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.emergency_app_flutter">
-   <application
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
         android:label="emergency_app_flutter"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -38,5 +40,4 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 </manifest>
