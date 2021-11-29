@@ -31,42 +31,37 @@ class _SuccessSubmitScreenState extends State<SuccessSubmitScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Container(
-                    decoration: boxDecoration(),
-                    child: OutlinedButton(
-                      style: buttonStyle(),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/SelectCrime');
-                      },
-                      child: const Text(
-                        'Yes, I would.',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                decoration: boxDecoration(),
+                child: OutlinedButton(
+                  style: buttonStyle(),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/SelectCrime');
+                  },
+                  child: const Text(
+                    'Yes, I would.',
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Container(
-                    decoration: boxDecoration(),
-                    child: OutlinedButton(
-                      style: buttonStyle(),
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/');
-                      },
-                      child: const Text(
-                        'No, take me home.',
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Container(
+                decoration: boxDecoration(),
+                child: OutlinedButton(
+                  style: buttonStyle(),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/');
+                  },
+                  child: const Text(
+                    'No, take me home.',
+                    textAlign: TextAlign.center,
                   ),
                 ),
-              ],
+              ),
             ),
           ],
         ),
