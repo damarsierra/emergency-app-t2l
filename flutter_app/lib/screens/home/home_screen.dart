@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,10 +16,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-    bool _phoneNumValidator(String value) {
+    bool _phoneNumRegEx(String value) {
       RegExp regex1 = RegExp(
           r'^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$');
-      if (value.length != 10 || value.isEmpty) {
+      if (value.isEmpty) {
         return true;
       } else if (!regex1.hasMatch(value)) {
         return true;
@@ -82,11 +83,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     keyboardType: const TextInputType.numberWithOptions(
                         signed: true, decimal: true),
                     validator: (String? value) {
-                      if (_phoneNumValidator(value!)) {
-                        return 'Please enter in a valid phone number';
-                      } else if (value != '911' || !(_phoneNumExist(value))) {
-                        return 'Please enter in a valid phone number';
-                      } else if (value == '911') {
+                      if(value != '911'){
+                        if (_phoneNumRegEx(value!)) {
+                          return 'Please enter in a valid phone number';
+                        } else if (!(_phoneNumExist(value))) {
+                          return 'Please enter in a valid phone number';
+                        } else if (_phoneNumExist(value)) {
+                          phoneNum = value;
+                          return null;
+                        }
+                      } else {
                         FirebaseFirestore.instance
                             .collection('emergency_profile')
                             .add({
@@ -95,9 +101,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           'phone_num': ''
                         }).then((DocumentReference docRef) =>
                                 {phoneNum = docRef.id});
-                        return null;
-                      } else if (_phoneNumExist(value)) {
-                        phoneNum = value;
                         return null;
                       }
                       return null;
