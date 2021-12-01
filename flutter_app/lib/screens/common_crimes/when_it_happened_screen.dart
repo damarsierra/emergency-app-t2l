@@ -16,15 +16,38 @@ Color gray = const Color.fromRGBO(204, 204, 204, 255);
 
 class _WhenItHappenedScreen extends State<WhenItHappenedScreen> {
   DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay.now();
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(context: context,
-        initialDate: selectedDate,
-        firstDate: DateTime(2015, 8, 0, 1),
-        lastDate: DateTime(2101, 8, 0, 1));
-    if (picked != null && picked != selectedDate) {
+    final DateTime? pickedDay = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101, 8),
+      helpText: 'Select date of the crime', // Can be used as title
+      cancelText: 'Not now',
+      confirmText: 'O.K.',
+    );
+
+    if (pickedDay != null && pickedDay != selectedDate) {
       setState(() {
-        selectedDate = picked;
+        selectedDate = pickedDay;
+      });
+    }
+  }
+
+  Future<void> _selectTime(BuildContext context) async {
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+      helpText: 'Select date of the crime', // Can be used as title
+      cancelText: 'Not now',
+      confirmText: 'O.K.',
+    );
+
+    if (pickedTime != null && pickedTime != selectedTime) {
+      setState(() {
+        selectedTime = pickedTime;
       });
     }
   }
@@ -38,10 +61,10 @@ class _WhenItHappenedScreen extends State<WhenItHappenedScreen> {
 
     // String whenHappened = '';
     // String dayHappened = '';
-    Future<void> addToReport(DateTime value) {
+    Future<void> addToReport(DateTime value1, TimeOfDay value2) {
       return reports
           .doc('common_crime_report')
-          .update({'when_happened': value})
+          .update({'day_happened': value1, 'time_happened': value2})
           .then((value) => print("Info Added"))
           .catchError((error) => print("Failed to add info: $error"));
     }
@@ -61,7 +84,18 @@ class _WhenItHappenedScreen extends State<WhenItHappenedScreen> {
                     fontWeight: FontWeight.w700),
               ),
             ),
-            const SizedBox( height: 20.0,),
+            Padding(
+              padding: const EdgeInsets.only(top: 16, left: 32, right: 32, bottom: 8),
+              child: Text(
+                "${selectedDate.toLocal()}".split(' ')[0],
+                style: const TextStyle(
+                    color: Color.fromRGBO(226, 226, 226, 30),
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 3),
               child: Container(
@@ -72,7 +106,35 @@ class _WhenItHappenedScreen extends State<WhenItHappenedScreen> {
                     _selectDate(context);
                   },
                   child: const Text(
-                    'Select date and time',
+                    ' Select Date                ',
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 16, left: 32, right: 32, bottom: 8),
+              child: Text(
+                "${selectedTime.format(context)}".split(' ')[0],
+                style: const TextStyle(
+                    color: Color.fromRGBO(226, 226, 226, 30),
+                    fontWeight: FontWeight.w500),
+              ),
+            ),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: Container(
+                decoration: boxDecoration(),
+                child: OutlinedButton(
+                  style: buttonStyle(),
+                  onPressed: () {
+                    _selectTime(context);
+                  },
+                  child: const Text(
+                    ' Select Time                ',
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -85,7 +147,7 @@ class _WhenItHappenedScreen extends State<WhenItHappenedScreen> {
                 child: OutlinedButton(
                   style: buttonStyle(),
                   onPressed: () {
-                    addToReport(selectedDate);
+                    addToReport(selectedDate, selectedTime);
                     Navigator.pushNamed(context, '/WhereItHappened');
                   },
                   child: const Text(
