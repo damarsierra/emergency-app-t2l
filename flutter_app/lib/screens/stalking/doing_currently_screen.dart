@@ -69,7 +69,7 @@ class _DoingCurrentlyScreen extends State<DoingCurrentlyScreen> {
                     child: TextFormField(
                       textAlign: TextAlign.left,
                       style: const TextStyle(fontSize: 20),
-                      maxLines: 15,
+                      maxLines: 10,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'They are..',
