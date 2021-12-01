@@ -16,7 +16,7 @@ What Was Done By Team
 -
 Erika Lopez - Project Lead, Documentation Writer
 Damar Sierra - Lead Programmer, Lead Tester
-Jasmine Brown - Floating Member, Assisted in Documentation Programming and Testing
+Jasmine Brown - Floating Member, Assisted in Documentation, Programming, and Testing
 
 Imported Packages
 -
