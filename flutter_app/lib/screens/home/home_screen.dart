@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: EdgeInsets.only(top: 165, left: 32),
                   child: Text(
-                    'Enter in PIN:',
+                    'Enter in Phone\nNumber:',
                     textAlign: TextAlign.left,
                     style: TextStyle(
                         color: Color.fromRGBO(226, 226, 226, 30),
