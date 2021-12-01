@@ -87,7 +87,7 @@ class _ManOrWomanScreen extends State<ManOrWomanScreen> {
                   style: buttonStyle(),
                   onPressed: () {
                     addToReport("Not Sure");
-                    Navigator.pushNamed(context, '/ArmedStalking');
+                    Navigator.pushNamed(context, '/Age');
                   },
                   child: const Text(
                     "I don't know",
